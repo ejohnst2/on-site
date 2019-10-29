@@ -1,4 +1,6 @@
-import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import React from 'react'
+import mapboxgl from 'mapbox-gl';
+
 
 const DataMap = () => {
   const Map = ReactMapboxGl({
@@ -7,18 +9,20 @@ const DataMap = () => {
   });
 
   return (
-    <Map
-      style="mapbox://styles/mapbox/streets-v9"
-      containerStyle={{
-        height: '100vh',
-        width: '100vw'
-      }}
-    >
-      <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-        <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
-      </Layer>
-    </Map>
-  );
+      <Map
+        style="mapbox://styles/mapbox/streets-v9"
+        containerStyle={{
+          height: '70vh',
+          width: '70vw'
+        }}
+      >
+        <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
+          <Feature coordinates={[-0.13235092163085938,51.518250335096376]} />
+        </Layer>
+      </Map>
+  )
 };
 
-export default { DataMap };
+
+
+export default DataMap;

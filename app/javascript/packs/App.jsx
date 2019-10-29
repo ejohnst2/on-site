@@ -6,8 +6,8 @@ import { createHttpLink } from 'apollo-link-http';
 import { render } from 'react-dom'
 import { setContext } from 'apollo-link-context';
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
 
+import NewMap from './NewMap';
 import Hello from './Hello';
 
 const httpLink = createHttpLink({
@@ -27,11 +27,6 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const Map = ReactMapboxGl({
-  accessToken:
-    'pk.eyJ1IjoiZWpvaG5zdDIiLCJhIjoiY2pvaWVrd2JwMDJtaDNwbXU1aWVrbXM0diJ9.TPpbd8963yEBwTe17X_Rbw'
-});
-
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: authLink.concat(httpLink),
@@ -40,14 +35,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Map
-        style="mapbox://styles/mapbox/streets-v9"
-        containerStyle={{
-          height: '100vh',
-          width: '100vw'
-        }}
-      >
-      </Map>
+      <NewMap />
       <Hello />
     </ApolloProvider>
   );
