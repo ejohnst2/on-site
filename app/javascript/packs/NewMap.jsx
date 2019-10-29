@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
+import Popup from '../plugins/Popup'
+import ReactDOMServer from "react-dom/server";
+
 import "mapbox-gl/dist/mapbox-gl.css";
 
 const styles = {
@@ -19,11 +22,11 @@ const NewMap = () => {
   };
 
   useEffect(() => {
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZWpvaG5zdDIiLCJhIjoiY2pvaWVrd2JwMDJtaDNwbXU1aWVrbXM0diJ9.TPpbd8963yEBwTe17X_Rbw';
+    mapboxgl.accessToken = process.env.MAPBOX_KEY;
     const initializeMap = ({ setMap, mapContainer }) => {
       const map = new mapboxgl.Map({
         container: mapContainer.current,
-        style: `mapbox://styles/mapbox/streets-v11`, // stylesheet location
+        style: `mapbox://styles/mapbox/streets-v11`,
         center: [0, 0],
         zoom: 5
       });
@@ -36,8 +39,11 @@ const NewMap = () => {
         await earthquakes.forEach((eq) => {
           const lat = eq.geometry.coordinates[0]
           const lng = eq.geometry.coordinates[1]
+          const popupContent = `<div>${eq.geometry}</div>`
+          const popup = new mapboxgl.Popup().setHTML(popupContent);
           new mapboxgl.Marker()
             .setLngLat([ lat, lng ])
+            .setPopup(popup)
             .addTo(map);
         })
 

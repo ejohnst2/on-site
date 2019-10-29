@@ -4,8 +4,7 @@ import mapboxgl from 'mapbox-gl';
 
 const DataMap = () => {
   const Map = ReactMapboxGl({
-    accessToken:
-      'pk.eyJ1IjoiZWpvaG5zdDIiLCJhIjoiY2pvaWVrd2JwMDJtaDNwbXU1aWVrbXM0diJ9.TPpbd8963yEBwTe17X_Rbw'
+    accessToken: process.env.MAPBOX_KEY
   });
 
   return (
