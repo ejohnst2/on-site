@@ -23,7 +23,7 @@ const WorldMap = (props) => {
   };
 
   useEffect(() => {
-    mapboxgl.accessToken = `pk.eyJ1IjoiZWpvaG5zdDIiLCJhIjoiY2syY2RkbnlzMDBjajNoczJ6cm5vdmhvZiJ9.AGODb40hT0EL5Dx8RMLWog`;
+    mapboxgl.accessToken = process.env.MAPBOX_KEY;
     const initializeMap = async ({ setMap, mapContainer }) => {
       const map = new mapboxgl.Map({
         container: mapContainer.current,
