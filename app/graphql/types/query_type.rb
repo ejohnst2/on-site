@@ -2,18 +2,16 @@ module Types
   class QueryType < Types::BaseObject
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
+    field :test_field, String, null: false
+    field :all_earthquakes, [EarthquakeType], null: false,
+      description: "returning all earthquake instances"
 
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    field :coordinates, LocationType, null: false
-
-    def test_field
-      "Hello World!"
+    def all_earthquakes
+      Earthquake.all
     end
 
-    def coordinates
-      "Goodbye World!"
+    def test_field
+      "Hello"
     end
   end
 end

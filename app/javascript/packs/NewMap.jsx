@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
+
 import Popup from '../plugins/Popup'
 import ReactDOMServer from "react-dom/server";
 
@@ -11,6 +14,15 @@ const styles = {
   position: "absolute"
 };
 
+const GET_COORDINATES = gql`
+  query Coordinates {
+    all_earthquakes {
+      latitude
+      longitude
+    }
+  }
+`;
+
 const NewMap = () => {
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
@@ -20,6 +32,8 @@ const NewMap = () => {
     markers.forEach(eq => bounds.extend([ eq.geometry.coordinates[0], eq.geometry.coordinates[1] ]));
     map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 });
   };
+
+  const { data, loading, error } = useQuery(GET_COORDINATES);
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.MAPBOX_KEY;

@@ -11,16 +11,17 @@ const Styled = styled.div`
 
 const TEST_FIELD_QUERY = gql`
   query Test {
-    testField
-    newField
+    allEarthquakes {
+      latitude
+    }
   }
 `;
 
 export default function Hello() {
   const { data, loading, error } = useQuery(TEST_FIELD_QUERY);
-
+  console.log(data)
   if (loading) return 'loading...';
   if (error) return error.message;
 
-  return <Styled>{data.testField}{data.newField}</Styled>;
+  return <Styled>{data.allEarthquakes[0]}</Styled>;
 }
