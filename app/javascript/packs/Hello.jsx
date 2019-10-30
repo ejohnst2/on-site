@@ -12,6 +12,7 @@ const Styled = styled.div`
 const TEST_FIELD_QUERY = gql`
   query Test {
     testField
+    newField
   }
 `;
 
@@ -21,5 +22,5 @@ export default function Hello() {
   if (loading) return 'loading...';
   if (error) return error.message;
 
-  return <Styled>{data.testField}</Styled>;
+  return <Styled>{data.testField}{data.newField}</Styled>;
 }
