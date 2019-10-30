@@ -12,7 +12,7 @@ const Popup = (props) => {
   return (
     <Window>
       <h3>{props.title}</h3>
-      <a href={props.details}>Check out more details</a>
+      <a href={props.details} target={'_blank'}>Check out more details</a>
     </Window>
   )
 }

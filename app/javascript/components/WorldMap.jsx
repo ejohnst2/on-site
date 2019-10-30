@@ -22,9 +22,20 @@ const WorldMap = (props) => {
     map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 });
   };
 
+  const placeMarkersOnMap = (map, pointInfo) => {
+    pointInfo.forEach((point) => {
+      const popupContent = renderToString(<Popup title={point.title} details={point.details} />)
+      const popup = new mapboxgl.Popup().setHTML(popupContent);
+      new mapboxgl.Marker()
+        .setLngLat([ point.longitude, point.latitude ])
+        .setPopup(popup)
+        .addTo(map);
+    })
+  };
+
   useEffect(() => {
     mapboxgl.accessToken = process.env.MAPBOX_KEY;
-    const initializeMap = async ({ setMap, mapContainer }) => {
+    const initializeMap = ({ setMap, mapContainer }) => {
       const map = new mapboxgl.Map({
         container: mapContainer.current,
         style: `mapbox://styles/mapbox/streets-v11`,
@@ -32,16 +43,8 @@ const WorldMap = (props) => {
         zoom: 5
       });
 
-      await props.info.forEach((point) => {
-        const popupContent = renderToString(<Popup title={point.title} details={point.details} />)
-        const popup = new mapboxgl.Popup().setHTML(popupContent);
-        new mapboxgl.Marker()
-          .setLngLat([ point.longitude, point.latitude ])
-          .setPopup(popup)
-          .addTo(map);
-      })
-
-      await fitMapToMarkers(map, props.info)
+      placeMarkersOnMap(map, props.info)
+      fitMapToMarkers(map, props.info)
 
       map.on("load", () => {
         setMap(map);
