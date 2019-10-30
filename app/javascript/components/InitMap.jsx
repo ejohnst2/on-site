@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import WorldMap from './WorldMap'
+import Header from './Header'
 
 const MAP_INFO_QUERY = gql`
   query MapInfo {
@@ -20,7 +21,10 @@ const InitMap = () => {
   if (error) return error.message;
 
   return(
-    <WorldMap info={data.allEarthquakes} />
+    <Fragment>
+      <Header />
+      <WorldMap info={data.allEarthquakes} />
+    </Fragment>
   )
 }
 

@@ -33,7 +33,6 @@ const WorldMap = (props) => {
       });
 
       await props.info.forEach((point) => {
-        console.log(point)
         const popupContent = renderToString(<Popup title={point.title} details={point.details} />)
         const popup = new mapboxgl.Popup().setHTML(popupContent);
         new mapboxgl.Marker()
