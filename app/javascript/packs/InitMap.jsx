@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+import { renderToString } from 'react-dom/server'
 
 import Popup from '../plugins/Popup'
-import ReactDOMServer from "react-dom/server";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -24,7 +24,6 @@ const InitMap = (props) => {
     map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 });
   };
 
-
   useEffect(() => {
     mapboxgl.accessToken = `pk.eyJ1IjoiZWpvaG5zdDIiLCJhIjoiY2syY2RkbnlzMDBjajNoczJ6cm5vdmhvZiJ9.AGODb40hT0EL5Dx8RMLWog`;
     const initializeMap = async ({ setMap, mapContainer }) => {
@@ -35,8 +34,8 @@ const InitMap = (props) => {
         zoom: 5
       });
 
-      await props.coordinates.forEach((point) => {
-        const popupContent = `<div>${point.latitude}</div>`
+      await props.info.forEach((point) => {
+        const popupContent = renderToString(<Popup title={point.title} details={point.details} />)
         const popup = new mapboxgl.Popup().setHTML(popupContent);
         new mapboxgl.Marker()
           .setLngLat([ point.latitude, point.latitude ])
@@ -44,7 +43,7 @@ const InitMap = (props) => {
           .addTo(map);
       })
 
-      await fitMapToMarkers(map, earthquakes)
+      await fitMapToMarkers(map, props.coordinates)
 
       map.on("load", () => {
         setMap(map);

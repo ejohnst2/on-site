@@ -3,23 +3,24 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import InitMap from './InitMap'
 
-const ALL_EARTHQUAKES_QUERY = gql`
-  query Coordinates {
+const MAP_INFO_QUERY = gql`
+  query MapInfo {
     allEarthquakes {
       latitude
       longitude
+      title
+      details
     }
   }
 `;
 
 const GraphTest = () => {
-  const { loading, error, data } = useQuery(ALL_EARTHQUAKES_QUERY)
+  const { loading, error, data } = useQuery(MAP_INFO_QUERY)
   if (loading) return 'loading...';
   if (error) return error.message;
-  console.log(data)
 
   return(
-    <InitMap coordinates={data.allEarthquakes} />
+    <InitMap info={data.allEarthquakes} />
   )
 }
 

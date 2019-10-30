@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOMServer from "react-dom/server";
 
-const Popup = () => {
+
+const Popup = (props) => {
   return (
-    <div>Let's see</div>
+    <div>
+      <p>{props.title}</p>
+      <a href={props.details}>Check out more details</a>
+    </div>
   )
 }
 
