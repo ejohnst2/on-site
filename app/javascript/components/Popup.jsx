@@ -8,18 +8,11 @@ const Window = styled.div`
   text-align: center;
 `
 
-const Title = styled.h3`
-`
-
-const Link = styled.a`
-`
-
-
 const Popup = (props) => {
   return (
     <Window>
-      <Title>{props.title}</Title>
-      <Link href={props.details}>Check out more details</Link>
+      <h3>{props.title}</h3>
+      <a href={props.details}>Check out more details</a>
     </Window>
   )
 }

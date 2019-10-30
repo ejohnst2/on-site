@@ -3,9 +3,7 @@ import mapboxgl from "mapbox-gl";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { renderToString } from 'react-dom/server'
-
-import Popup from '../plugins/Popup'
-
+import Popup from '../components/Popup'
 import "mapbox-gl/dist/mapbox-gl.css";
 
 const styles = {
@@ -14,13 +12,13 @@ const styles = {
   position: "absolute"
 };
 
-const InitMap = (props) => {
+const WorldMap = (props) => {
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
 
   const fitMapToMarkers = (map, markers) => {
     const bounds = new mapboxgl.LngLatBounds();
-    markers.forEach(m => bounds.extend([ m.latitude, m.longitude ]));
+    markers.forEach(m => bounds.extend([ m.longitude, m.latitude ]));
     map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 });
   };
 
@@ -35,15 +33,16 @@ const InitMap = (props) => {
       });
 
       await props.info.forEach((point) => {
+        console.log(point)
         const popupContent = renderToString(<Popup title={point.title} details={point.details} />)
         const popup = new mapboxgl.Popup().setHTML(popupContent);
         new mapboxgl.Marker()
-          .setLngLat([ point.latitude, point.latitude ])
+          .setLngLat([ point.longitude, point.latitude ])
           .setPopup(popup)
           .addTo(map);
       })
 
-      await fitMapToMarkers(map, props.coordinates)
+      await fitMapToMarkers(map, props.info)
 
       map.on("load", () => {
         setMap(map);
@@ -57,4 +56,4 @@ const InitMap = (props) => {
   return <div ref={el => (mapContainer.current = el)} style={styles} />;
 };
 
-export default InitMap;
+export default WorldMap;

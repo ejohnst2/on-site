@@ -1,7 +1,7 @@
 import React from "react";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import InitMap from './InitMap'
+import WorldMap from './WorldMap'
 
 const MAP_INFO_QUERY = gql`
   query MapInfo {
@@ -14,14 +14,14 @@ const MAP_INFO_QUERY = gql`
   }
 `;
 
-const GraphTest = () => {
+const InitMap = () => {
   const { loading, error, data } = useQuery(MAP_INFO_QUERY)
   if (loading) return 'loading...';
   if (error) return error.message;
 
   return(
-    <InitMap info={data.allEarthquakes} />
+    <WorldMap info={data.allEarthquakes} />
   )
 }
 
-export default GraphTest;
+export default InitMap;

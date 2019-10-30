@@ -6,10 +6,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { render } from 'react-dom'
 import { setContext } from 'apollo-link-context';
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
-
-import InitMap from './InitMap';
-import Hello from './Hello';
-import GraphTest from './GraphTest';
+import InitMap from '../components/InitMap';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -36,7 +33,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <GraphTest />
+      <InitMap />
     </ApolloProvider>
   );
 }
